@@ -1,11 +1,29 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import Navbar from "./components/Navbar";
+import blueBackground from "./images/blueBackground.jpg";
+import InvoicePage from "./pages/InvoicePage";
+
+/* 
+auth = window.gapi.auth2.getAuthInstance();
+      var profile = auth.currentUser.get().getBasicProfile();
+      console.log("ID: " + profile.getId());
+      console.log("Full Name: " + profile.getName());
+      console.log("Given Name: " + profile.getGivenName());
+      console.log("Family Name: " + profile.getFamilyName());
+      console.log("Image URL: " + profile.getImageUrl());
+      console.log("Email: " + profile.getEmail());*/
 
 class App extends React.Component {
-  state = { isSignedIn: null, userId: null };
+  state = {
+    isSignedIn: null,
+    userId: null,
+    name: null,
+    imageURL: null,
+    email: null,
+  };
 
   setAuth = () => {
     window.gapi.load("client:auth2", () => {
@@ -13,22 +31,35 @@ class App extends React.Component {
         .init({
           clientId: process.env.REACT_APP_CLIENT_ID,
           scope: "email",
-        }).then(() => {
+        })
+        .then(() => {
+          console.log("loaded auth");
           this.auth = window.gapi.auth2.getAuthInstance();
           this.setState({
             isSignedIn: this.auth.isSignedIn.get(),
             userId: this.auth.currentUser.get().getId(),
           });
+
+          if (this.auth.currentUser.get().getBasicProfile()) {
+            const profile = this.auth.currentUser.get().getBasicProfile();
+            this.setState({
+              name: profile.getName(),
+              imageURL: profile.getImageUrl(),
+              email: profile.getEmail(),
+            });
+
+            console.log(
+              this.auth.currentUser.get().getBasicProfile().getName()
+            );
+          }
+
           this.auth.isSignedIn.listen(this.onAuthChange);
-        }); 
+        });
     });
-  }
+  };
 
   componentDidMount() {
-    console.log(process.env.REACT_APP_CLIENT_ID);
-    console.log('this ran');
     this.setAuth();
-    
   }
 
   onAuthChange = () => {
@@ -40,24 +71,29 @@ class App extends React.Component {
 
   onSignIn = (history) => {
     this.auth.signIn().then(() => {
+      this.setState({ isSignedIn: true });
       history.push("/dashboard");
     });
   };
 
   onSignOut = (history) => {
     this.auth.signOut().then(() => {
-      history.push("/");
+      //history.push("/");
     });
   };
 
   render() {
     return (
-      <div style={{minHeight: "100vh",
-      backgroundImage: `url()`,
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      backgroundAttachment: "fixed",
-      overflow: 'scroll'}}>
+      <div
+        style={{
+          minHeight: "100vh",
+          backgroundImage: `url(${blueBackground})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          overflow: "scroll",
+        }}
+      >
         <BrowserRouter>
           <Route
             path="/"
@@ -87,6 +123,21 @@ class App extends React.Component {
               path="/dashboard"
               render={(props) => (
                 <DashboardPage
+                  {...props}
+                  isSignedIn={this.state.isSignedIn}
+                  userId={this.state.userId}
+                  googleName={this.state.name}
+                  imageURL={this.state.imageURL}
+                  email={this.state.email}
+                  onSignOutClick={this.onSignOut}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/createinvoice"
+              render={(props) => (
+                <InvoicePage
                   {...props}
                   isSignedIn={this.state.isSignedIn}
                   userId={this.state.userId}

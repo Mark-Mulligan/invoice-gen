@@ -16,7 +16,7 @@ const CustomNavbar = (props) => {
               <IndexLinkContainer to="/dashboard">
                 <Nav.Link active={false}>Dashboard</Nav.Link>
               </IndexLinkContainer>
-              <IndexLinkContainer to="/invoice">
+              <IndexLinkContainer to="/createinvoice">
                 <Nav.Link active={false}>Create Invoice</Nav.Link>
               </IndexLinkContainer>
             </Nav>
