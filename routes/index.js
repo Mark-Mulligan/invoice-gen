@@ -1,11 +1,12 @@
 const path = require("path");
 const router = require("express").Router();
-const { loginUser, getUser } = require("../controllers/user");
+const { loginUser, getUser, updateUserInfo } = require("../controllers/user");
 
 // If no API routes are hit, send the React app
 
 router.route("/api/user").post(loginUser);
 router.route("/api/user").get(getUser);
+router.route("/api/user").put(updateUserInfo);
 
 router.use(function(req, res) {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));

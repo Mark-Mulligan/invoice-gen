@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import EditProfileModal from "../modals/EditProfileModal";
 import "./DashboardPage.css";
 
 const columns = [
@@ -90,9 +91,14 @@ const DashboardPage = (props) => {
               </div>
               <div className="col-lg-3 col-12 d-flex align-items-center justify-content-center mb-3">
                 <div>
-                  <button className="btn btn-outline-dark">
-                    Edit Information
-                  </button>
+                  <EditProfileModal
+                    googleId={props.userId}
+                    name={userInfo.name}
+                    email={userInfo.email}
+                    phone={userInfo.phoneNumber}
+                    setUserInfo={setUserInfo}
+                    getUserData={getUserData}
+                  />
                 </div>
               </div>
             </div>
