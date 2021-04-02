@@ -1,6 +1,6 @@
 const User = require("../models/User");
 
-exports.createUser = async (req, res) => {
+exports.loginUser = async (req, res) => {
   console.log(req.body);
 
   const {
@@ -32,6 +32,17 @@ exports.createUser = async (req, res) => {
         .status(500)
         .json({ success: false, data: "There was an error logining you in" });
     }
+  }
+}
+
+exports.getUser = async (req, res) => {
+  const userId = req.query.userid;
+  const foundUser = await User.find({ googleId: userId });
+
+  if (foundUser.length > 0) {
+    res.json({ success: true, data: foundUser })
+  } else {
+    res.json({ success: false, data: "There was an error retriving your data."})
   }
 }
 

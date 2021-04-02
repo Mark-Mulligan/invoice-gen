@@ -6,6 +6,7 @@ import DashboardPage from "./pages/DashboardPage";
 import Navbar from "./components/Navbar";
 import blueBackground from "./images/blueBackground.jpg";
 import InvoicePage from "./pages/InvoicePage";
+import "./App.css";
 
 /* 
 auth = window.gapi.auth2.getAuthInstance();
