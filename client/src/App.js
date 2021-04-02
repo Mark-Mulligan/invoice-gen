@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import axios from "axios";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import Navbar from "./components/Navbar";
@@ -47,10 +48,6 @@ class App extends React.Component {
               imageURL: profile.getImageUrl(),
               email: profile.getEmail(),
             });
-
-            console.log(
-              this.auth.currentUser.get().getBasicProfile().getName()
-            );
           }
 
           this.auth.isSignedIn.listen(this.onAuthChange);
@@ -72,9 +69,25 @@ class App extends React.Component {
   onSignIn = (history) => {
     this.auth.signIn().then(() => {
       this.setState({ isSignedIn: true });
-      history.push("/dashboard");
+      this.createNewUser(history);
     });
   };
+
+  createNewUser(history) {
+    const profile = this.auth.currentUser.get().getBasicProfile();
+    const userInfo = {
+      name: profile.getName(),
+      email: profile.getEmail(),
+      googleId: profile.getId(),
+    };
+
+    axios.post("/api/user", userInfo).then((data) => {
+      console.log(data);
+      history.push("/dashboard");
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
 
   onSignOut = (history) => {
     this.auth.signOut().then(() => {
