@@ -1,9 +1,13 @@
+require("dotenv").config();
 const express = require("express");
 const routes = require("./routes");
 const cors = require('cors');
+const connectDB = require("./config/db");
 const app = express();
 const PORT = process.env.PORT || 3001;
 app.use(express.static('.'));
+
+connectDB();
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
