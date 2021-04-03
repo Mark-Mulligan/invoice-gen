@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import DateInput from "../inputs/DataInput";
 
 const InvoicePage = (props) => {
   useEffect(() => {
@@ -7,7 +8,9 @@ const InvoicePage = (props) => {
     } 
   }, [props.history, props.isSignedIn]);
 
-  return <div>Invoice Page</div>;
+  return (
+    <DateInput />
+  )
 };
 
 export default InvoicePage;

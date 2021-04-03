@@ -6,6 +6,8 @@ import DashboardPage from "./pages/DashboardPage";
 import Navbar from "./components/Navbar";
 import blueBackground from "./images/blueBackground.jpg";
 import InvoicePage from "./pages/InvoicePage";
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import "./App.css";
 
 class App extends React.Component {
@@ -15,16 +17,16 @@ class App extends React.Component {
     name: null,
     imageURL: null,
     email: null,
-    showStudentModal: false
+    showStudentModal: false,
   };
 
   hideModal = () => {
     this.setState({ showStudentModal: false });
-  }
+  };
 
   showModal = () => {
     this.setState({ showStudentModal: true });
-  }
+  };
 
   setAuth = () => {
     window.gapi.load("client:auth2", () => {
@@ -81,12 +83,15 @@ class App extends React.Component {
       googleId: profile.getId(),
     };
 
-    axios.post("/api/user", userInfo).then((data) => {
-      console.log(data);
-      history.push("/dashboard");
-    }).catch(function (error) {
-      console.log(error);
-    });
+    axios
+      .post("/api/user", userInfo)
+      .then((data) => {
+        console.log(data);
+        history.push("/dashboard");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   onSignOut = (history) => {
@@ -107,63 +112,65 @@ class App extends React.Component {
           overflow: "scroll",
         }}
       >
-        <BrowserRouter>
-          <Route
-            path="/"
-            render={(props) => (
-              <Navbar
-                {...props}
-                userId={this.state.userId}
-                isSignedIn={this.state.isSignedIn}
-                onSignOutClick={this.onSignOut}
-                showModal={this.showModal}
-              />
-            )}
-          />
-
-          <Switch>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <BrowserRouter>
             <Route
-              exact
               path="/"
               render={(props) => (
-                <LoginPage
+                <Navbar
                   {...props}
-                  isSignedIn={this.state.isSignedIn}
-                  onSignInClick={this.onSignIn}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/dashboard"
-              render={(props) => (
-                <DashboardPage
-                  {...props}
-                  isSignedIn={this.state.isSignedIn}
                   userId={this.state.userId}
-                  googleName={this.state.name}
-                  imageURL={this.state.imageURL}
-                  email={this.state.email}
-                  onSignOutClick={this.onSignOut}
-                  showStudentModal={this.state.showStudentModal}
-                  hideModal={this.hideModal}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/createinvoice"
-              render={(props) => (
-                <InvoicePage
-                  {...props}
                   isSignedIn={this.state.isSignedIn}
-                  userId={this.state.userId}
                   onSignOutClick={this.onSignOut}
+                  showModal={this.showModal}
                 />
               )}
             />
-          </Switch>
-        </BrowserRouter>
+
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <LoginPage
+                    {...props}
+                    isSignedIn={this.state.isSignedIn}
+                    onSignInClick={this.onSignIn}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/dashboard"
+                render={(props) => (
+                  <DashboardPage
+                    {...props}
+                    isSignedIn={this.state.isSignedIn}
+                    userId={this.state.userId}
+                    googleName={this.state.name}
+                    imageURL={this.state.imageURL}
+                    email={this.state.email}
+                    onSignOutClick={this.onSignOut}
+                    showStudentModal={this.state.showStudentModal}
+                    hideModal={this.hideModal}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/createinvoice"
+                render={(props) => (
+                  <InvoicePage
+                    {...props}
+                    isSignedIn={this.state.isSignedIn}
+                    userId={this.state.userId}
+                    onSignOutClick={this.onSignOut}
+                  />
+                )}
+              />
+            </Switch>
+          </BrowserRouter>
+        </MuiPickersUtilsProvider>
       </div>
     );
   }
