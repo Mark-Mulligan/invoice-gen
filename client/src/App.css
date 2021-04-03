@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+/* Modals */
+.confirm-modal {
+  z-index: 3;
+}
+
 /* TABLE COMPONENT */
 .search-container {
   margin-top: 10px;
@@ -31,6 +36,10 @@
 .table-row {
   padding: 0;
   background-color: rgb(240, 240, 240) !important;
+}
+
+.table-row:hover {
+  cursor: pointer;
 }
 
 .table td {

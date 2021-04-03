@@ -10,33 +10,38 @@ function Confirm(props) {
   const handleConfirm = () => {
     props.onConfirm();
     handleClose();
-  }
+  };
 
   return (
     <>
-      <Button variant="dark" onClick={handleShow}>Delete Student</Button>
-
-      <Modal
-        centered
-        show={show}
-        onHide={handleClose}
-        onKeyDown={(e) => e.stopPropagation()}
-        onClick={(e) => e.stopPropagation()}
-        onFocus={(e) => e.stopPropagation()}
-        onMouseOver={(e) => e.stopPropagation()}
-      >
+      <Button variant="dark" onClick={handleShow}>
+        Delete Student
+      </Button>
+        <Modal
+          size="sm"
+          className="confirm-modal"
+          centered
+          show={show}
+          onHide={handleClose}
+          onKeyDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+          onFocus={(e) => e.stopPropagation()}
+          onMouseOver={(e) => e.stopPropagation()}
+        >
           <Modal.Header closeButton>
-            <Modal.Title>Are you sure you want to delete this student?</Modal.Title>
+            <Modal.Title>
+              Are you sure you want to delete this student?
+            </Modal.Title>
           </Modal.Header>
           <Modal.Footer className="justify-content-start">
-            <Button onClick={handleConfirm} variant="primary">
+            <Button onClick={handleConfirm} variant="dark">
               Yes
             </Button>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="outline-dark" onClick={handleClose}>
               Cancel
             </Button>
           </Modal.Footer>
-      </Modal>
+        </Modal>
     </>
   );
 }
