@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import DateInput from "../inputs/DataInput";
 import axios from "axios";
-import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
+} from "@material-ui/core";
 
 const InvoicePage = (props) => {
   const [userStudents, setUserStudents] = useState("");
@@ -56,7 +62,44 @@ const InvoicePage = (props) => {
         <div className="col-lg-6 col-12">
           <div className="container-fluid">
             <div className="row">
-              <div className="col">
+              <div className="col mb-3">
+                <TextField
+                  required
+                  fullWidth
+                  id="your-name-input"
+                  label="Your Name"
+                  variant="outlined"
+                  value={yourName}
+                  onChange={(e) => setYourName(e.target.value)}
+                />
+              </div>
+              <div className="col mb-3">
+                <TextField
+                  required
+                  fullWidth
+                  id="your-email-input"
+                  label="Your Email"
+                  variant="outlined"
+                  value={yourEmail}
+                  onChange={(e) => setYourEmail(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col mb-3">
+                <TextField
+                  required
+                  fullWidth
+                  id="your-phone-input"
+                  label="Your Phone Number"
+                  variant="outlined"
+                  value={yourNumber}
+                  onChange={(e) => setYourNumber(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col mb-3">
                 <FormControl fullWidth variant="outlined">
                   <InputLabel id="select-student-label">Student</InputLabel>
                   <Select
@@ -82,18 +125,14 @@ const InvoicePage = (props) => {
                   </Select>
                 </FormControl>
               </div>
-              <div className="col">
-
-              </div>
+              <div className="col mb-3"></div>
             </div>
             <div className="row">
               <div className="col">
-              <DateInput />
+                <DateInput />
               </div>
             </div>
           </div>
-
-          
         </div>
         <div className="col-lg-6 col-12"></div>
       </div>
