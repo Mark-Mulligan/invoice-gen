@@ -82,6 +82,7 @@ const DashboardPage = (props) => {
   return (
     <div className="container">
       <StudentModal
+        addStudentModal
         submitButtonName="Add Student"
         showStudentModal={props.showStudentModal}
         hideModal={props.hideModal}

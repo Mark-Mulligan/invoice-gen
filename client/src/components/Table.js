@@ -32,6 +32,8 @@ const Table = ({ columns, data, generateMessage, onStudentChange }) => {
   const [showModal, setShowModal] = useState(false);
   const [studentClicked, setStudentClicked] = useState("");
 
+  const hideModal = () => setShowModal(false);
+
   const handleRowClick = (studentInfo) => {
     setStudentClicked(studentInfo);
     setShowModal(true);
@@ -99,11 +101,12 @@ const Table = ({ columns, data, generateMessage, onStudentChange }) => {
       </table>
       {studentClicked && (
         <StudentModal
-          showModal={showModal}
-          setShowModal={setShowModal}
+          submitButtonName="Submit Changes"
+          editStudentModal
+          showStudentModal={showModal}
+          hideModal={hideModal}
           studentInfo={studentClicked}
           generateMessage={generateMessage}
-          onStudentChange={onStudentChange}
         />
       )}
     </div>

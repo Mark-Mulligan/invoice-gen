@@ -1,18 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { TextField } from "@material-ui/core";
 import axios from "axios";
 
-const StudentModal = ({ userId, submitButtonName, showStudentModal, hideModal, afterSubmit }) => {
-  const [name, setName] = useState('');
-  const [parentName, setParentName] = useState('');
-  const [parentEmail, setParentEmail] = useState('');
-  const [parentPhone, setParentPhone] = useState('');
-  const [school, setSchool] = useState('');
+const StudentModal = ({
+  userId,
+  submitButtonName,
+  studentInfo,
+  showStudentModal,
+  hideModal,
+  afterSubmit,
+  addStudentModal,
+  editStudentModal,
+}) => {
+  const [name, setName] = useState("");
+  const [parentName, setParentName] = useState("");
+  const [parentEmail, setParentEmail] = useState("");
+  const [parentPhone, setParentPhone] = useState("");
+  const [school, setSchool] = useState("");
+
+  useEffect(() => {
+    if (editStudentModal) {
+      setName(studentInfo?.name);
+      setParentName(studentInfo?.parentName);
+      setParentEmail(studentInfo?.parentEmail);
+      setParentPhone(studentInfo?.parentPhone);
+      setSchool(studentInfo?.school)
+    }
+  }, [studentInfo]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    console.log(userId, name, parentName, parentEmail, parentPhone, school)
 
     const studentInfo = {
       userGoogleId: userId,
@@ -20,24 +38,51 @@ const StudentModal = ({ userId, submitButtonName, showStudentModal, hideModal, a
       parentName,
       parentEmail,
       parentPhone,
-      school
-    }
+      school,
+    };
 
-    axios.post("/api/students", studentInfo)
-      .then((response) => { 
+    if (addStudentModal) {
+      addStudent(studentInfo);
+    } else if (editStudentModal) {
+      editStudent(studentInfo);
+    }
+  };
+
+  const addStudent = (studentInfo) => {
+    axios
+      .post("/api/students", studentInfo)
+      .then((response) => {
         console.log(response);
-        setName('');
-        setParentName('');
-        setParentEmail('');
-        setParentPhone('');
-        setSchool('');
+        setName("");
+        setParentName("");
+        setParentEmail("");
+        setParentPhone("");
+        setSchool("");
         hideModal();
         afterSubmit();
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
+  };
+
+  const editStudent = (studentInfo) => {
+    axios
+      .put("/api/students", studentInfo)
+      .then((response) => {
+        console.log(response);
+        setName("");
+        setParentName("");
+        setParentEmail("");
+        setParentPhone("");
+        setSchool("");
+        hideModal();
+        afterSubmit();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -64,7 +109,7 @@ const StudentModal = ({ userId, submitButtonName, showStudentModal, hideModal, a
                 variant="outlined"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                autoComplete='off'
+                autoComplete="off"
               />
             </div>
             <div className="mb-3">
@@ -125,7 +170,7 @@ const StudentModal = ({ userId, submitButtonName, showStudentModal, hideModal, a
         </form>
       </Modal>
     </>
-  )
-}
+  );
+};
 
 export default StudentModal;
