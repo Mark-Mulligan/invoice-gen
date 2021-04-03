@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import { TextField } from "@material-ui/core";
 import axios from "axios";
 
-const StudentModal = ({ userId, submitButtonName, showStudentModal, hideModal }) => {
+const StudentModal = ({ userId, submitButtonName, showStudentModal, hideModal, afterSubmit }) => {
   const [name, setName] = useState('');
   const [parentName, setParentName] = useState('');
   const [parentEmail, setParentEmail] = useState('');
@@ -32,6 +32,7 @@ const StudentModal = ({ userId, submitButtonName, showStudentModal, hideModal })
         setParentPhone('');
         setSchool('');
         hideModal();
+        afterSubmit();
       })
       .catch(function (error) {
         console.log(error);

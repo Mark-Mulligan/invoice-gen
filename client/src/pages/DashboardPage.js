@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EditProfileModal from "../modals/EditProfileModal";
 import Table from "../components/Table";
+import StudentModal from "../modals/StudentModal";
 import "./DashboardPage.css";
 
 const columns = [
@@ -30,7 +31,7 @@ const columns = [
 const DashboardPage = (props) => {
   const [userInfo, setUserInfo] = useState(null);
   const [userStudents, setUserStudents] = useState([]);
-  const [success, setSuccess] = useState('');
+  const [success, setSuccess] = useState("");
 
   const generateMessage = (message) => {
     setSuccess(message);
@@ -40,14 +41,16 @@ const DashboardPage = (props) => {
   };
 
   const getUserStudents = () => {
-    axios.get(`/api/students?userid=${props.userId}`).then((response) => {
-      setUserStudents(response.data.data);
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
+    axios
+      .get(`/api/students?userid=${props.userId}`)
+      .then((response) => {
+        setUserStudents(response.data.data);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const getUserData = () => {
     axios
@@ -73,14 +76,20 @@ const DashboardPage = (props) => {
     if (props.userId) {
       getUserData();
       getUserStudents();
-
     }
   }, [props.userId]);
 
   return (
     <div className="container">
+      <StudentModal
+        submitButtonName="Add Student"
+        showStudentModal={props.showStudentModal}
+        hideModal={props.hideModal}
+        userId={props.userId}
+        afterSubmit={getUserStudents}
+      />
       {userInfo && (
-        <div className="profile-container mt-4">
+        <div className="profile-container mt-4 mb-4">
           <div className="centered-text">
             <h2 className="centered-text">My Account Info</h2>
           </div>
@@ -129,16 +138,16 @@ const DashboardPage = (props) => {
       )}
 
       {userStudents && userStudents.length > 0 ? (
-          <div className="table-wrapper">
-            <Table
-              columns={columns}
-              data={userStudents}
-              generateMessage={generateMessage}
-            />
-          </div>
-        ) : (
-          <p>You Currently have no students.</p>
-        )}
+        <div className="table-wrapper">
+          <Table
+            columns={columns}
+            data={userStudents}
+            generateMessage={generateMessage}
+          />
+        </div>
+      ) : (
+        <p>You Currently have no students.</p>
+      )}
     </div>
   );
 };
