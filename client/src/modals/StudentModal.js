@@ -25,14 +25,14 @@ const StudentModal = ({
       setParentName(studentInfo?.parentName);
       setParentEmail(studentInfo?.parentEmail);
       setParentPhone(studentInfo?.parentPhone);
-      setSchool(studentInfo?.school)
+      setSchool(studentInfo?.school);
     }
   }, [studentInfo]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    const studentInfo = {
+    const addStudentInfo = {
       userGoogleId: userId,
       name,
       parentName,
@@ -41,10 +41,19 @@ const StudentModal = ({
       school,
     };
 
+    const editStudentInfo = {
+      studentId: studentInfo?._id,
+      name,
+      parentName,
+      parentEmail,
+      parentPhone,
+      school,
+    };
+
     if (addStudentModal) {
-      addStudent(studentInfo);
+      addStudent(addStudentInfo);
     } else if (editStudentModal) {
-      editStudent(studentInfo);
+      editStudent(editStudentInfo);
     }
   };
 
@@ -67,6 +76,7 @@ const StudentModal = ({
   };
 
   const editStudent = (studentInfo) => {
+    console.log(studentInfo);
     axios
       .put("/api/students", studentInfo)
       .then((response) => {

@@ -35,8 +35,25 @@ exports.getStudents = async (req, res) => {
       .status(500)
       .json({ success: false, data: "There was an error finding your students" });
   }
+}
 
-  
+exports.editStudent = async (req, res) => {
+  const { studentId, name, parentName, parentEmail, parentPhone, school } = req.body;
 
+  try {
+    let student = await Student.findOneAndUpdate({ _id: studentId }, {
+      name, parentName, parentEmail, parentPhone, school
+    });
 
+    res.status(201).json({
+      success: true,
+      data: student,
+      message: "Student was successfully updated.",
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ success: false, data: "There was an error finding your students" });
+  }
 }

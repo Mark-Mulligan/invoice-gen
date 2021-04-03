@@ -28,7 +28,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
   );
 }
 
-const Table = ({ columns, data, generateMessage, onStudentChange }) => {
+const Table = ({ columns, data, generateMessage, afterSubmit, userId }) => {
   const [showModal, setShowModal] = useState(false);
   const [studentClicked, setStudentClicked] = useState("");
 
@@ -107,6 +107,8 @@ const Table = ({ columns, data, generateMessage, onStudentChange }) => {
           hideModal={hideModal}
           studentInfo={studentClicked}
           generateMessage={generateMessage}
+          afterSubmit={afterSubmit}
+          userId={userId}
         />
       )}
     </div>

@@ -144,6 +144,8 @@ const DashboardPage = (props) => {
             columns={columns}
             data={userStudents}
             generateMessage={generateMessage}
+            afterSubmit={getUserStudents}
+            userId={props.userId}
           />
         </div>
       ) : (
