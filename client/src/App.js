@@ -114,6 +114,7 @@ class App extends React.Component {
             render={(props) => (
               <Navbar
                 {...props}
+                userId={this.state.userId}
                 isSignedIn={this.state.isSignedIn}
                 onSignOutClick={this.onSignOut}
               />

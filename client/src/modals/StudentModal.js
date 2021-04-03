@@ -1,0 +1,130 @@
+import React, { useState } from "react";
+import { Modal, Button } from "react-bootstrap";
+import { TextField } from "@material-ui/core";
+import axios from "axios";
+
+const StudentModal = ({ userId, submitButtonName, showStudentModal, hideModal }) => {
+  const [name, setName] = useState('');
+  const [parentName, setParentName] = useState('');
+  const [parentEmail, setParentEmail] = useState('');
+  const [parentPhone, setParentPhone] = useState('');
+  const [school, setSchool] = useState('');
+
+  const onFormSubmit = (event) => {
+    event.preventDefault();
+    console.log(userId, name, parentName, parentEmail, parentPhone, school)
+
+    const studentInfo = {
+      userGoogleId: userId,
+      name,
+      parentName,
+      parentEmail,
+      parentPhone,
+      school
+    }
+
+    axios.post("/api/students", studentInfo)
+      .then((response) => { 
+        console.log(response);
+        setName('');
+        setParentName('');
+        setParentEmail('');
+        setParentPhone('');
+        setSchool('');
+        hideModal();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  return (
+    <>
+      <Modal
+        backdrop="static"
+        show={showStudentModal}
+        onHide={hideModal}
+        onKeyDown={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
+        onFocus={(e) => e.stopPropagation()}
+        onMouseOver={(e) => e.stopPropagation()}
+      >
+        <form onSubmit={onFormSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Student</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="mb-3">
+              <TextField
+                required
+                fullWidth
+                id="student-name-input"
+                label="Name"
+                variant="outlined"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                autoComplete='off'
+              />
+            </div>
+            <div className="mb-3">
+              <TextField
+                required
+                fullWidth
+                id="parent-name-input"
+                label="Parent Name"
+                variant="outlined"
+                value={parentName}
+                onChange={(e) => setParentName(e.target.value)}
+                autoComplete="off"
+              />
+            </div>
+            <div className="mb-3">
+              <TextField
+                required
+                fullWidth
+                id="parent-email-input"
+                label="Parent Email"
+                variant="outlined"
+                value={parentEmail}
+                onChange={(e) => setParentEmail(e.target.value)}
+                autoComplete="off"
+              />
+            </div>
+            <div className="mb-3">
+              <TextField
+                fullWidth
+                id="parente-phone-input"
+                label="Parent Phone"
+                variant="outlined"
+                value={parentPhone}
+                onChange={(e) => setParentPhone(e.target.value)}
+                autoComplete="off"
+              />
+            </div>
+            <div className="mb-3">
+              <TextField
+                fullWidth
+                id="school-input"
+                label="School"
+                variant="outlined"
+                value={school}
+                onChange={(e) => setSchool(e.target.value)}
+                autoComplete="off"
+              />
+            </div>
+          </Modal.Body>
+          <Modal.Footer className="justify-content-start">
+            <Button variant="dark" type="submit">
+              {submitButtonName}
+            </Button>
+            <Button variant="outline-dark" onClick={hideModal}>
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </form>
+      </Modal>
+    </>
+  )
+}
+
+export default StudentModal;

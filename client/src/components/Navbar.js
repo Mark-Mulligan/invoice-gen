@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
+import StudentModal from "../modals/StudentModal";
 
 const CustomNavbar = (props) => {
+  const [showStudentModal, setShowStudentModal] = useState(false);
+  const showModal = () => setShowStudentModal(true);
+  const hideModal = () => setShowStudentModal(false);
+
   return (
     <div>
       {props.history.location.pathname !== "/" && (
@@ -19,6 +24,15 @@ const CustomNavbar = (props) => {
               <IndexLinkContainer to="/createinvoice">
                 <Nav.Link active={false}>Create Invoice</Nav.Link>
               </IndexLinkContainer>
+              <Nav.Link active={false} onClick={showModal}>
+                Add Student
+                <StudentModal
+                  submitButtonName="Add Student"
+                  showStudentModal={showStudentModal}
+                  hideModal={hideModal}
+                  userId={props.userId}
+                />
+              </Nav.Link>
             </Nav>
             <Nav>
               <button

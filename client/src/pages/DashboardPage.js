@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EditProfileModal from "../modals/EditProfileModal";
+import Table from "../components/Table";
 import "./DashboardPage.css";
 
 const columns = [
@@ -28,6 +29,25 @@ const columns = [
 
 const DashboardPage = (props) => {
   const [userInfo, setUserInfo] = useState(null);
+  const [userStudents, setUserStudents] = useState([]);
+  const [success, setSuccess] = useState('');
+
+  const generateMessage = (message) => {
+    setSuccess(message);
+    setTimeout(() => {
+      setSuccess("");
+    }, 2000);
+  };
+
+  const getUserStudents = () => {
+    axios.get(`/api/students?userid=${props.userId}`).then((response) => {
+      setUserStudents(response.data.data);
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 
   const getUserData = () => {
     axios
@@ -52,6 +72,8 @@ const DashboardPage = (props) => {
   useEffect(() => {
     if (props.userId) {
       getUserData();
+      getUserStudents();
+
     }
   }, [props.userId]);
 
@@ -105,6 +127,18 @@ const DashboardPage = (props) => {
           </div>
         </div>
       )}
+
+      {userStudents && userStudents.length > 0 ? (
+          <div className="table-wrapper">
+            <Table
+              columns={columns}
+              data={userStudents}
+              generateMessage={generateMessage}
+            />
+          </div>
+        ) : (
+          <p>You Currently have no students.</p>
+        )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const StudentSchema = new mongoose.Schema({
-  userId: { type: String, required: true },
+  userGoogleId: { type: String, required: true },
   name: {
     type: String,
     required: [true, "Please provied a name"],
