@@ -1,7 +1,14 @@
 const Student = require("../models/Student");
 
 exports.createStudent = async (req, res) => {
-  const { userGoogleId, name, parentName, parentEmail, parentPhone, school } = req.body;
+  const {
+    userGoogleId,
+    name,
+    parentName,
+    parentEmail,
+    parentPhone,
+    school,
+  } = req.body;
 
   const student = new Student({
     userGoogleId,
@@ -9,7 +16,7 @@ exports.createStudent = async (req, res) => {
     parentName,
     parentEmail,
     parentPhone,
-    school
+    school,
   });
 
   try {
@@ -19,9 +26,12 @@ exports.createStudent = async (req, res) => {
     console.log(error);
     res
       .status(500)
-      .json({ success: false, data: "There was an error creating the student." });
+      .json({
+        success: false,
+        data: "There was an error creating the student.",
+      });
   }
-}
+};
 
 exports.getStudents = async (req, res) => {
   const userGoogleId = req.query.userid;
@@ -33,17 +43,34 @@ exports.getStudents = async (req, res) => {
     console.log(error);
     res
       .status(500)
-      .json({ success: false, data: "There was an error finding your students" });
+      .json({
+        success: false,
+        data: "There was an error finding your students",
+      });
   }
-}
+};
 
 exports.editStudent = async (req, res) => {
-  const { studentId, name, parentName, parentEmail, parentPhone, school } = req.body;
+  const {
+    studentId,
+    name,
+    parentName,
+    parentEmail,
+    parentPhone,
+    school,
+  } = req.body;
 
   try {
-    let student = await Student.findOneAndUpdate({ _id: studentId }, {
-      name, parentName, parentEmail, parentPhone, school
-    });
+    let student = await Student.findOneAndUpdate(
+      { _id: studentId },
+      {
+        name,
+        parentName,
+        parentEmail,
+        parentPhone,
+        school,
+      }
+    );
 
     res.status(201).json({
       success: true,
@@ -54,6 +81,32 @@ exports.editStudent = async (req, res) => {
     console.log(error);
     res
       .status(500)
-      .json({ success: false, data: "There was an error finding your students" });
+      .json({
+        success: false,
+        data: "There was an error finding your students",
+      });
   }
-}
+};
+
+exports.deleteStudent = async (req, res) => {
+  const studentId = req.query.studentid;
+
+  try {
+    const deletedStudent = await Student.deleteOne({ _id: studentId });
+    console.log(deletedStudent);
+
+    res.status(201).json({
+      success: true,
+      data: deletedStudent,
+      message: "Student was successfully deleted.",
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        data: "There was an error deleting the student",
+      });
+  }
+};

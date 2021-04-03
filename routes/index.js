@@ -1,7 +1,7 @@
 const path = require("path");
 const router = require("express").Router();
 const { loginUser, getUser, updateUserInfo } = require("../controllers/user");
-const { createStudent, getStudents, editStudent } = require("../controllers/student");
+const { createStudent, getStudents, editStudent, deleteStudent } = require("../controllers/student");
 
 // If no API routes are hit, send the React app
 
@@ -12,6 +12,7 @@ router.route("/api/user").put(updateUserInfo);
 router.route("/api/students").post(createStudent);
 router.route("/api/students").get(getStudents);
 router.route("/api/students").put(editStudent);
+router.route("/api/students").delete(deleteStudent);
 
 router.use(function(req, res) {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { TextField } from "@material-ui/core";
 import axios from "axios";
+import Confirm from "../modals/Confirm";
 
 const StudentModal = ({
   userId,
@@ -94,6 +95,19 @@ const StudentModal = ({
       });
   };
 
+  const handleDeleteClick = (studentInfo) => {
+    axios
+      .delete(`/api/students?studentid=${studentInfo._id}`)
+      .then((response) => {
+        console.log(response);
+        hideModal();
+        afterSubmit();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   return (
     <>
       <Modal
@@ -173,6 +187,7 @@ const StudentModal = ({
             <Button variant="dark" type="submit">
               {submitButtonName}
             </Button>
+            {editStudentModal && <Confirm onConfirm={() => handleDeleteClick(studentInfo)} />}
             <Button variant="outline-dark" onClick={hideModal}>
               Cancel
             </Button>
