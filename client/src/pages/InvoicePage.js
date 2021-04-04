@@ -11,13 +11,17 @@ import {
 
 const InvoicePage = (props) => {
   const [userStudents, setUserStudents] = useState("");
-  const [userInfo, setUserInfo] = useState("");
 
   const [student, setStudent] = useState("");
   const [yourName, setYourName] = useState("");
   const [yourEmail, setYourEmail] = useState("");
   const [yourNumber, setYourNumber] = useState("");
   const [months, setMonths] = useState([]);
+
+  const [studentName, setStudentName] = useState("");
+  const [parentName, setParentName] = useState("");
+  const [parentEmail, setParentEmail] = useState("");
+  const [parentPhone, setParentPhone] = useState("");
 
   const getUserStudents = () => {
     axios
@@ -35,12 +39,24 @@ const InvoicePage = (props) => {
     axios
       .get(`/api/user?userid=${props.userId}`)
       .then((response) => {
-        setUserInfo(response.data.data[0]);
+        const user = response.data.data[0];
+        setYourName(user.name);
+        setYourEmail(user.email);
+        setYourNumber(user.phoneNumber);
         console.log(response);
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const onStudentSelect = (event) => {
+    const selectedStudent = userStudents[event.target.value];
+    setStudent(event.target.value);
+    setStudentName(selectedStudent?.name);
+    setParentName(selectedStudent?.parentName);
+    setParentEmail(selectedStudent?.parentEmail);
+    setParentPhone(selectedStudent?.parentPhone);
   };
 
   useEffect(() => {
@@ -97,8 +113,6 @@ const InvoicePage = (props) => {
                   onChange={(e) => setYourNumber(e.target.value)}
                 />
               </div>
-            </div>
-            <div className="row">
               <div className="col mb-3">
                 <FormControl fullWidth variant="outlined">
                   <InputLabel id="select-student-label">Student</InputLabel>
@@ -107,7 +121,7 @@ const InvoicePage = (props) => {
                     labelId="select-student-label"
                     id="student-select"
                     value={student}
-                    onChange={(e) => setStudent(e.target.value)}
+                    onChange={onStudentSelect}
                     label="Student"
                   >
                     <MenuItem value="">
@@ -125,7 +139,54 @@ const InvoicePage = (props) => {
                   </Select>
                 </FormControl>
               </div>
-              <div className="col mb-3"></div>
+            </div>
+            <div className="row">
+              <div className="col mb-3">
+                <TextField
+                  required
+                  fullWidth
+                  id="student-name-input"
+                  label="Student Name"
+                  variant="outlined"
+                  value={studentName}
+                  onChange={(e) => setStudentName(e.target.value)}
+                />
+              </div>
+              <div className="col mb-3">
+                <TextField
+                  required
+                  fullWidth
+                  id="parent-name-input"
+                  label="Parent Name"
+                  variant="outlined"
+                  value={parentName}
+                  onChange={(e) => setParentName(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col mb-3">
+                <TextField
+                  required
+                  fullWidth
+                  id="parent-email-input"
+                  label="Parent Email"
+                  variant="outlined"
+                  value={parentEmail}
+                  onChange={(e) => setParentEmail(e.target.value)}
+                />
+              </div>
+              <div className="col mb-3">
+                <TextField
+                  required
+                  fullWidth
+                  id="parent-phone-input"
+                  label="Parent Phone"
+                  variant="outlined"
+                  value={parentPhone}
+                  onChange={(e) => setParentPhone(e.target.value)}
+                />
+              </div>
             </div>
             <div className="row">
               <div className="col">
