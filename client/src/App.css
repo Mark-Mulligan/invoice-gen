@@ -45,3 +45,8 @@
 .table td {
   padding: .5rem !important;
 }
+
+/* PDF VIEW */
+.pdf-viewer {
+  height: 700px;
+}

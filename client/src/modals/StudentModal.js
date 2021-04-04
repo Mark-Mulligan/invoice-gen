@@ -21,7 +21,7 @@ const StudentModal = ({
   const [school, setSchool] = useState("");
 
   useEffect(() => {
-    if (editStudentModal) {
+    if (studentInfo) {
       setName(studentInfo?.name);
       setParentName(studentInfo?.parentName);
       setParentEmail(studentInfo?.parentEmail);

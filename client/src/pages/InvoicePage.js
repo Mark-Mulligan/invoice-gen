@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { PDFViewer } from "@react-pdf/renderer";
 import axios from "axios";
 import {
   FormControl,
@@ -8,6 +9,7 @@ import {
   TextField,
 } from "@material-ui/core";
 
+import MyDocument from "../pdf/MyDocument";
 import DateInput from "../inputs/DataInput";
 import MultiSelect from "../inputs/MultiSelect";
 
@@ -25,8 +27,11 @@ const InvoicePage = (props) => {
   const [parentPhone, setParentPhone] = useState("");
 
   const [months, setMonths] = useState([]);
-  const [numLessons, setNumLessons] = useState(4);
+  const [lessonNum, setLessonNum] = useState(4);
   const [lessons, setLessons] = useState([]);
+  const [total, setTotal] = useState(84);
+
+  const [pdfData, setPdfData] = useState(null);
 
   const getUserStudents = () => {
     axios
@@ -60,7 +65,7 @@ const InvoicePage = (props) => {
   const createLessonState = (numberOfLessons) => {
     const lessonState = [];
     for (let i = 0; i < numberOfLessons; i++) {
-      lessonState.push({ date: new Date(), cost: 21 });
+      lessonState.push({ date: new Date().toLocaleDateString(), cost: 21 });
     }
     setLessons(lessonState);
   };
@@ -111,177 +116,213 @@ const InvoicePage = (props) => {
   }, [props.userId]);
 
   useEffect(() => {
-    if (numLessons && numLessons > 0) {
+    if (lessonNum && lessonNum > 0) {
       console.log("this ran");
-      createLessonState(numLessons);
+      createLessonState(lessonNum);
     }
-  }, [numLessons]);
+  }, [lessonNum]);
+
+  useEffect(() => {
+    let sum = 0;
+    lessons.forEach((lesson) => {
+      sum += lesson.cost;
+    });
+    setTotal(sum);
+  }, [lessons]);
+
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    setPdfData({
+      ...pdfData,
+      lessons,
+      total,
+      lessonNum,
+      studentName,
+      yourName,
+      yourEmail,
+      yourNumber,
+      parentName,
+      parentEmail,
+      months,
+    });
+  };
 
   return (
     <div className="mt-4">
       <div className="row">
         <div className="col-lg-6 col-12">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col mb-3">
-                <TextField
-                  required
-                  fullWidth
-                  id="your-name-input"
-                  label="Your Name"
-                  variant="outlined"
-                  value={yourName}
-                  onChange={(e) => setYourName(e.target.value)}
-                />
-              </div>
-              <div className="col mb-3">
-                <TextField
-                  required
-                  fullWidth
-                  id="your-email-input"
-                  label="Your Email"
-                  variant="outlined"
-                  value={yourEmail}
-                  onChange={(e) => setYourEmail(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col mb-3">
-                <TextField
-                  required
-                  fullWidth
-                  id="your-phone-input"
-                  label="Your Phone Number"
-                  variant="outlined"
-                  value={yourNumber}
-                  onChange={(e) => setYourNumber(e.target.value)}
-                />
-              </div>
-              <div className="col mb-3">
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel id="select-student-label">Student</InputLabel>
-                  <Select
-                    required
-                    labelId="select-student-label"
-                    id="student-select"
-                    value={student}
-                    onChange={onStudentSelect}
-                    label="Student"
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {userStudents &&
-                      userStudents.length > 0 &&
-                      userStudents.map((student, index) => {
-                        return (
-                          <MenuItem key={student._id} value={index}>
-                            {student.name}
-                          </MenuItem>
-                        );
-                      })}
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col mb-3">
-                <TextField
-                  required
-                  fullWidth
-                  id="student-name-input"
-                  label="Student Name"
-                  variant="outlined"
-                  value={studentName}
-                  onChange={(e) => setStudentName(e.target.value)}
-                />
-              </div>
-              <div className="col mb-3">
-                <TextField
-                  required
-                  fullWidth
-                  id="parent-name-input"
-                  label="Parent Name"
-                  variant="outlined"
-                  value={parentName}
-                  onChange={(e) => setParentName(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col mb-3">
-                <TextField
-                  required
-                  fullWidth
-                  id="parent-email-input"
-                  label="Parent Email"
-                  variant="outlined"
-                  value={parentEmail}
-                  onChange={(e) => setParentEmail(e.target.value)}
-                />
-              </div>
-              <div className="col mb-3">
-                <TextField
-                  required
-                  fullWidth
-                  id="parent-phone-input"
-                  label="Parent Phone"
-                  variant="outlined"
-                  value={parentPhone}
-                  onChange={(e) => setParentPhone(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col mb-3">
-                <MultiSelect
-                  selectValue={months}
-                  handleMultiSelect={handleMultiSelect}
-                />
-              </div>
-              <div className="col mb-3">
-                <TextField
-                  required
-                  fullWidth
-                  type="number"
-                  id="lesson-number-input"
-                  label="Number of Lessons"
-                  variant="outlined"
-                  value={numLessons}
-                  onChange={(e) => setNumLessons(e.target.value)}
-                />
-              </div>
-            </div>
-
-            {lessons.length > 0 && (
+          <form onSubmit={onFormSubmit}>
+            <div className="container-fluid">
               <div className="row">
-                {console.log(lessons)}
                 <div className="col mb-3">
-                  <DateInput
-                    id="date-input-0"
-                    onDateChange={onDateChange}
-                    value={lessons[0].date}
+                  <TextField
+                    required
+                    fullWidth
+                    id="your-name-input"
+                    label="Your Name"
+                    variant="outlined"
+                    value={yourName}
+                    onChange={(e) => setYourName(e.target.value)}
                   />
                 </div>
                 <div className="col mb-3">
                   <TextField
+                    required
                     fullWidth
-                    id="cost-input-0"
-                    label="Amount"
-                    type="number"
-                    value={lessons[0].cost}
+                    id="your-email-input"
+                    label="Your Email"
                     variant="outlined"
-                    onChange={(e) => {
-                      onCostChange(e, e.target.id);
-                    }}
+                    value={yourEmail}
+                    onChange={(e) => setYourEmail(e.target.value)}
                   />
                 </div>
               </div>
-            )}
-          </div>
+              <div className="row">
+                <div className="col mb-3">
+                  <TextField
+                    required
+                    fullWidth
+                    id="your-phone-input"
+                    label="Your Phone Number"
+                    variant="outlined"
+                    value={yourNumber}
+                    onChange={(e) => setYourNumber(e.target.value)}
+                  />
+                </div>
+                <div className="col mb-3">
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel id="select-student-label">Student</InputLabel>
+                    <Select
+                      required
+                      labelId="select-student-label"
+                      id="student-select"
+                      value={student}
+                      onChange={onStudentSelect}
+                      label="Student"
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {userStudents &&
+                        userStudents.length > 0 &&
+                        userStudents.map((student, index) => {
+                          return (
+                            <MenuItem key={student._id} value={index}>
+                              {student.name}
+                            </MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col mb-3">
+                  <TextField
+                    required
+                    fullWidth
+                    id="student-name-input"
+                    label="Student Name"
+                    variant="outlined"
+                    value={studentName}
+                    onChange={(e) => setStudentName(e.target.value)}
+                  />
+                </div>
+                <div className="col mb-3">
+                  <TextField
+                    required
+                    fullWidth
+                    id="parent-name-input"
+                    label="Parent Name"
+                    variant="outlined"
+                    value={parentName}
+                    onChange={(e) => setParentName(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col mb-3">
+                  <TextField
+                    required
+                    fullWidth
+                    id="parent-email-input"
+                    label="Parent Email"
+                    variant="outlined"
+                    value={parentEmail}
+                    onChange={(e) => setParentEmail(e.target.value)}
+                  />
+                </div>
+                <div className="col mb-3">
+                  <TextField
+                    required
+                    fullWidth
+                    id="parent-phone-input"
+                    label="Parent Phone"
+                    variant="outlined"
+                    value={parentPhone}
+                    onChange={(e) => setParentPhone(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col mb-3">
+                  <MultiSelect
+                    selectValue={months}
+                    handleMultiSelect={handleMultiSelect}
+                  />
+                </div>
+                <div className="col mb-3">
+                  <TextField
+                    required
+                    fullWidth
+                    type="number"
+                    id="lesson-number-input"
+                    label="Number of Lessons"
+                    variant="outlined"
+                    value={lessonNum}
+                    onChange={(e) => setLessonNum(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {lessons.length > 0 &&
+                lessons.map((lesson, index) => {
+                  return (
+                    <div className="row" key={`lesson-group-${index}`}>
+                      <div className="col mb-3">
+                        <DateInput
+                          id={`date-input-${index}`}
+                          onDateChange={onDateChange}
+                          value={lessons[index].date}
+                        />
+                      </div>
+                      <div className="col mb-3">
+                        <TextField
+                          fullWidth
+                          id={`cost-input-${index}`}
+                          label="Amount"
+                          type="number"
+                          value={lessons[index].cost}
+                          variant="outlined"
+                          onChange={(e) => {
+                            onCostChange(e, e.target.id);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+            <button type="submit" className="btn btn-light btn-block">Update Pdf</button>
+          </form>
         </div>
-        <div className="col-lg-6 col-12"></div>
+        <div className="col-lg-6 col-12">
+        {pdfData !== null ? (
+          <PDFViewer className="container-fluid pdf-viewer">
+            <MyDocument data={pdfData} title="test" />
+          </PDFViewer>
+        ) : null}
+        </div>
       </div>
     </div>
   );
