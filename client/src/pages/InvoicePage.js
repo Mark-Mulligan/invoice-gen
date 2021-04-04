@@ -163,12 +163,14 @@ const InvoicePage = (props) => {
                     variant="outlined"
                     value={yourName}
                     onChange={(e) => setYourName(e.target.value)}
+                    size="small"
                   />
                 </div>
                 <div className="col mb-3">
                   <TextField
                     required
                     fullWidth
+                    size="small"
                     id="your-email-input"
                     label="Your Email"
                     variant="outlined"
@@ -182,6 +184,7 @@ const InvoicePage = (props) => {
                   <TextField
                     required
                     fullWidth
+                    size="small"
                     id="your-phone-input"
                     label="Your Phone Number"
                     variant="outlined"
@@ -190,7 +193,7 @@ const InvoicePage = (props) => {
                   />
                 </div>
                 <div className="col mb-3">
-                  <FormControl fullWidth variant="outlined">
+                  <FormControl size="small" fullWidth variant="outlined">
                     <InputLabel id="select-student-label">Student</InputLabel>
                     <Select
                       required
@@ -221,6 +224,7 @@ const InvoicePage = (props) => {
                   <TextField
                     required
                     fullWidth
+                    size="small" 
                     id="student-name-input"
                     label="Student Name"
                     variant="outlined"
@@ -232,6 +236,7 @@ const InvoicePage = (props) => {
                   <TextField
                     required
                     fullWidth
+                    size="small" 
                     id="parent-name-input"
                     label="Parent Name"
                     variant="outlined"
@@ -245,6 +250,7 @@ const InvoicePage = (props) => {
                   <TextField
                     required
                     fullWidth
+                    size="small" 
                     id="parent-email-input"
                     label="Parent Email"
                     variant="outlined"
@@ -256,6 +262,7 @@ const InvoicePage = (props) => {
                   <TextField
                     required
                     fullWidth
+                    size="small" 
                     id="parent-phone-input"
                     label="Parent Phone"
                     variant="outlined"
@@ -275,6 +282,7 @@ const InvoicePage = (props) => {
                   <TextField
                     required
                     fullWidth
+                    size="small" 
                     type="number"
                     id="lesson-number-input"
                     label="Number of Lessons"
@@ -299,6 +307,7 @@ const InvoicePage = (props) => {
                       <div className="col mb-3">
                         <TextField
                           fullWidth
+                          size="small"
                           id={`cost-input-${index}`}
                           label="Amount"
                           type="number"
@@ -312,8 +321,9 @@ const InvoicePage = (props) => {
                     </div>
                   );
                 })}
+                <button type="submit" className="btn btn-light btn-block">Update Pdf</button>
             </div>
-            <button type="submit" className="btn btn-light btn-block">Update Pdf</button>
+           
           </form>
         </div>
         <div className="col-lg-6 col-12">

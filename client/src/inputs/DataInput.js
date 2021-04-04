@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
   dateInput: {
-    marginTop: '6px'
+    marginTop: 0
   }
 }));
 
@@ -19,6 +19,8 @@ const DateInput = (props) => {
 
   return (
       <KeyboardDatePicker
+        inputVariant="outlined"
+        size="small"
         className={classes.dateInput}
         fullWidth
         disableToolbar

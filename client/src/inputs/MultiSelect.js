@@ -29,12 +29,18 @@ const MenuProps = {
 };
 
 const useStyles = makeStyles(() => ({
+  formControl: {
+    height: "40px"
+  },
+  label: {
+    marginTop: "2px !important"
+  },
   chips: {
     display: "flex",
     flexWrap: "wrap",
   },
   chip: {
-    margin: 2,
+    marginRight: 2,
   },
 }));
 
@@ -42,9 +48,10 @@ const MultiSelect = ({ selectValue, handleMultiSelect }) => {
   const classes = useStyles();
 
   return (
-    <FormControl variant="outlined" fullWidth>
+    <FormControl className={classes.formControl} variant="outlined" fullWidth>
       <InputLabel id="months-label">Invoice Month(s)</InputLabel>
       <Select
+        className={classes.label}
         required
         labelId="months-label"
         id="months-select"
