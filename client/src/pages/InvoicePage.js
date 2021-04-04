@@ -273,8 +273,8 @@ const InvoicePage = (props) => {
               </div>
               <div className="row">
                 <div className="col mb-3">
-                  <MultiSelect
-                    selectValue={months}
+                  <MultiSelect 
+                    value={months}
                     handleMultiSelect={handleMultiSelect}
                   />
                 </div>

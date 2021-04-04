@@ -1,81 +1,76 @@
 import React from "react";
-import { FormControl, InputLabel, Select, Input, Chip, MenuItem } from '@material-ui/core';
-import { makeStyles } from "@material-ui/core/styles";
+import ReactDOM from "react-dom";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
-const monthsList = [
-  "January",
-  "Feburary",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "Sepetember",
-  "October",
-  "November",
-  "December",
-];
+class MultiSelect2 extends React.Component {
+  state = {
+    labelWidth: 0,
+    monthsList: [
+      "January",
+      "Feburary",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "Sepetember",
+      "October",
+      "November",
+      "December",
+    ],
+  };
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+  componentDidMount() {
+    this.setState({
+      labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+    });
+  }
 
-const useStyles = makeStyles(() => ({
-  formControl: {
-    height: "40px"
-  },
-  label: {
-    marginTop: "2px !important"
-  },
-  chips: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  chip: {
-    marginRight: 2,
-  },
-}));
+  render() {
+    return (
+      <div className="App">
+        <div className={"input"}>
+          <FormControl variant="outlined" size="small" fullWidth>
+            <InputLabel
+              ref={(ref) => {
+                this.InputLabelRef = ref;
+              }}
+              htmlFor="months-select"
+            >
+              Invoice Month(s)
+            </InputLabel>
+            <Select
+              multiple
+              value={this.props.value}
+              onChange={this.props.handleMultiSelect}
+              input={
+                <OutlinedInput
+                  size="small"
+                  labelWidth={this.state.labelWidth}
+                  name="months-select"
+                  id="months-select"
+                />
+              }
+            >
+              {this.state.monthsList.map((month) => (
+                <MenuItem key={month} value={month}>
+                  {month}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+      </div>
+    );
+  }
+}
 
-const MultiSelect = ({ selectValue, handleMultiSelect }) => {
-  const classes = useStyles();
-
-  return (
-    <FormControl className={classes.formControl} variant="outlined" fullWidth>
-      <InputLabel id="months-label">Invoice Month(s)</InputLabel>
-      <Select
-        className={classes.label}
-        required
-        labelId="months-label"
-        id="months-select"
-        multiple
-        value={selectValue}
-        onChange={handleMultiSelect}
-        input={<Input id="month-chip" />}
-        renderValue={(selected) => (
-          <div className={classes.chips}>
-            {selected.map((value) => (
-              <Chip key={value} label={value} className={classes.chip} />
-            ))}
-          </div>
-        )}
-        MenuProps={MenuProps}
-      >
-        {monthsList.map((month) => (
-          <MenuItem key={month} value={month}>
-            {month}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-  );
-};
-
-export default MultiSelect;
+export default MultiSelect2;
