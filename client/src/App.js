@@ -4,6 +4,7 @@ import axios from "axios";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import Navbar from "./components/Navbar";
+import deskBackground from "./images/deskBackground.jpg";
 import blueBackground from "./images/blueBackground.jpg";
 import InvoicePage from "./pages/InvoicePage";
 import DateFnsUtils from '@date-io/date-fns';
@@ -105,7 +106,7 @@ class App extends React.Component {
       <div
         style={{
           minHeight: "100vh",
-          backgroundImage: `url(${blueBackground})`,
+          backgroundImage: `url(${deskBackground})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",

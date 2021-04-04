@@ -1,15 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 
-class MultiSelect2 extends React.Component {
+
+class MultiSelect extends React.Component {
   state = {
     labelWidth: 0,
     monthsList: [
@@ -48,6 +46,7 @@ class MultiSelect2 extends React.Component {
               Invoice Month(s)
             </InputLabel>
             <Select
+              required
               multiple
               value={this.props.value}
               onChange={this.props.handleMultiSelect}
@@ -73,4 +72,4 @@ class MultiSelect2 extends React.Component {
   }
 }
 
-export default MultiSelect2;
+export default MultiSelect;

@@ -12,6 +12,7 @@ import {
 import MyDocument from "../pdf/MyDocument";
 import DateInput from "../inputs/DataInput";
 import MultiSelect from "../inputs/MultiSelect";
+import "./InvoicePage.css";
 
 const InvoicePage = (props) => {
   const [userStudents, setUserStudents] = useState("");
@@ -148,7 +149,7 @@ const InvoicePage = (props) => {
   };
 
   return (
-    <div className="mt-4">
+    <div className="pt-4 light-grey-background invoice-page">
       <div className="row">
         <div className="col-lg-6 col-12">
           <form onSubmit={onFormSubmit}>
@@ -156,7 +157,6 @@ const InvoicePage = (props) => {
               <div className="row">
                 <div className="col mb-3">
                   <TextField
-                    required
                     fullWidth
                     id="your-name-input"
                     label="Your Name"
@@ -168,7 +168,6 @@ const InvoicePage = (props) => {
                 </div>
                 <div className="col mb-3">
                   <TextField
-                    required
                     fullWidth
                     size="small"
                     id="your-email-input"
@@ -182,7 +181,6 @@ const InvoicePage = (props) => {
               <div className="row">
                 <div className="col mb-3">
                   <TextField
-                    required
                     fullWidth
                     size="small"
                     id="your-phone-input"
@@ -222,7 +220,6 @@ const InvoicePage = (props) => {
               <div className="row">
                 <div className="col mb-3">
                   <TextField
-                    required
                     fullWidth
                     size="small" 
                     id="student-name-input"
@@ -234,7 +231,6 @@ const InvoicePage = (props) => {
                 </div>
                 <div className="col mb-3">
                   <TextField
-                    required
                     fullWidth
                     size="small" 
                     id="parent-name-input"
@@ -248,7 +244,6 @@ const InvoicePage = (props) => {
               <div className="row">
                 <div className="col mb-3">
                   <TextField
-                    required
                     fullWidth
                     size="small" 
                     id="parent-email-input"
@@ -260,7 +255,6 @@ const InvoicePage = (props) => {
                 </div>
                 <div className="col mb-3">
                   <TextField
-                    required
                     fullWidth
                     size="small" 
                     id="parent-phone-input"
@@ -321,7 +315,7 @@ const InvoicePage = (props) => {
                     </div>
                   );
                 })}
-                <button type="submit" className="btn btn-light btn-block">Update Pdf</button>
+                <button type="submit" className="btn btn-dark btn-block">Update Pdf</button>
             </div>
            
           </form>

@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.light-grey-background {
+  background: rgba(228, 231, 240, 0.8);
+}
+
 /* Modals */
 .confirm-modal {
   z-index: 3;
@@ -48,5 +52,5 @@
 
 /* PDF VIEW */
 .pdf-viewer {
-  height: 700px;
+  height: 100%;
 }
