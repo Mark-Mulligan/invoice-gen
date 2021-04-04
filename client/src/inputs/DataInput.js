@@ -1,22 +1,34 @@
-
-import React, { useState } from "react";
+import React from "react";
 import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+  dateInput: {
+    marginTop: '6px'
+  }
+}));
 
 const DateInput = (props) => {
-  const [date, setDate] = useState(new Date());
+  const classes = useStyles();
+
+  const handleDateChange = (date) => {
+    props.onDateChange(date.toLocaleDateString(), props.id);
+  };
 
   return (
       <KeyboardDatePicker
+        className={classes.dateInput}
+        fullWidth
         disableToolbar
         variant="inline"
         format="MM/dd/yyyy"
         margin="normal"
-        id="date-input-1"
+        id={props.id}
         label="Lesson Date"
-        value={date}
-        onChange={setDate}
+        value={props.value}
+        onChange={handleDateChange}
         KeyboardButtonProps={{
           "aria-label": "change date",
         }}

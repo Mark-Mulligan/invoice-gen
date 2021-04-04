@@ -71,6 +71,12 @@ const InvoicePage = (props) => {
     updateFieldChanged("cost", Number(result[0]), Number(event.target.value));
   };
 
+  const onDateChange = (date, inputId) => {
+    let numRegex = /[0-9]+/;
+    let result = inputId.match(numRegex);
+    updateFieldChanged("date", Number(result[0]), date);
+  };
+
   const updateFieldChanged = (name, index, value) => {
     let newArr = lessons.map((item, i) => {
       if (index === i) {
@@ -252,7 +258,11 @@ const InvoicePage = (props) => {
               <div className="row">
                 {console.log(lessons)}
                 <div className="col mb-3">
-                  <DateInput />
+                  <DateInput
+                    id="date-input-0"
+                    onDateChange={onDateChange}
+                    value={lessons[0].date}
+                  />
                 </div>
                 <div className="col mb-3">
                   <TextField
