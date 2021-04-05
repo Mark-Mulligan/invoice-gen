@@ -70,7 +70,7 @@ const InvoicePage = (props) => {
   const createLessonState = (numberOfLessons) => {
     const lessonState = [];
     for (let i = 0; i < numberOfLessons; i++) {
-      lessonState.push({ date: new Date().toLocaleDateString(), cost: 21 });
+      lessonState.push({ date: new Date().toLocaleDateString(), cost: userStudents[student]?.lessonCost || 21 });
     }
     setLessons(lessonState);
   };
@@ -160,7 +160,7 @@ const InvoicePage = (props) => {
           <form onSubmit={onFormSubmit}>
             <div className="container-fluid">
               <div className="row">
-                <div className="col mb-3">
+                <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     fullWidth
                     id="your-name-input"
@@ -171,7 +171,7 @@ const InvoicePage = (props) => {
                     size="small"
                   />
                 </div>
-                <div className="col mb-3">
+                <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     fullWidth
                     size="small"
@@ -184,7 +184,7 @@ const InvoicePage = (props) => {
                 </div>
               </div>
               <div className="row">
-                <div className="col mb-3">
+                <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     fullWidth
                     size="small"
@@ -195,7 +195,7 @@ const InvoicePage = (props) => {
                     onChange={(e) => setYourNumber(e.target.value)}
                   />
                 </div>
-                <div className="col mb-3">
+                <div className="col-sm-6 col-12 mb-3">
                   <FormControl size="small" fullWidth variant="outlined">
                     <InputLabel id="select-student-label">Student</InputLabel>
                     <Select
@@ -223,7 +223,7 @@ const InvoicePage = (props) => {
                 </div>
               </div>
               <div className="row">
-                <div className="col mb-3">
+                <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     fullWidth
                     size="small" 
@@ -234,7 +234,7 @@ const InvoicePage = (props) => {
                     onChange={(e) => setStudentName(e.target.value)}
                   />
                 </div>
-                <div className="col mb-3">
+                <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     fullWidth
                     size="small" 
@@ -247,7 +247,7 @@ const InvoicePage = (props) => {
                 </div>
               </div>
               <div className="row">
-                <div className="col mb-3">
+                <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     fullWidth
                     size="small" 
@@ -258,7 +258,7 @@ const InvoicePage = (props) => {
                     onChange={(e) => setParentEmail(e.target.value)}
                   />
                 </div>
-                <div className="col mb-3">
+                <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     fullWidth
                     size="small" 
@@ -271,13 +271,13 @@ const InvoicePage = (props) => {
                 </div>
               </div>
               <div className="row">
-                <div className="col mb-3">
+                <div className="col-sm-6 col-12 mb-3">
                   <MultiSelect 
                     value={months}
                     handleMultiSelect={handleMultiSelect}
                   />
                 </div>
-                <div className="col mb-3">
+                <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     required
                     fullWidth
@@ -296,14 +296,14 @@ const InvoicePage = (props) => {
                 lessons.map((lesson, index) => {
                   return (
                     <div className="row" key={`lesson-group-${index}`}>
-                      <div className="col mb-3">
+                      <div className="col-sm-6 col-12 mb-3">
                         <DateInput
                           id={`date-input-${index}`}
                           onDateChange={onDateChange}
                           value={lessons[index].date}
                         />
                       </div>
-                      <div className="col mb-3">
+                      <div className="col-sm-6 col-12 mb-3">
                         <TextField
                           fullWidth
                           size="small"
@@ -320,13 +320,13 @@ const InvoicePage = (props) => {
                     </div>
                   );
                 })}
-                <button type="submit" className="btn btn-dark btn-block">Update Pdf</button>
+                <button type="submit" className="mb-3 btn btn-dark btn-block">{pdfData ? 'Update PDF' : 'Generate PDF'}</button>
             </div>
           </form>
         </div>
-        <div className="col-lg-6 col-12">
+        <div className="col-lg-6 col-12 pdf-column">
         {pdfData !== null ? (
-          <PDFViewer className="container-fluid pdf-viewer">
+          <PDFViewer className="container-fluid pdf-viewer p-0 mb-3">
             <MyDocument data={pdfData} title="test" />
           </PDFViewer>
         ) : null}

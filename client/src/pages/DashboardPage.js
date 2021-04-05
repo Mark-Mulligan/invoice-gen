@@ -28,8 +28,8 @@ const columns = [
   },
   {
     Header: "Rate",
-    accessor: "lessonCost"
-  }
+    accessor: "lessonCost",
+  },
 ];
 
 const DashboardPage = (props) => {
@@ -110,13 +110,13 @@ const DashboardPage = (props) => {
                         <div>{userInfo.name}</div>
                       </div>
                     </div>
-                    <div className="col-md-4 col-12 d-flex align-items-center mb-3">
+                    <div className="col-md-5 col-12 d-flex align-items-center mb-3">
                       <div>
                         <h5>Email</h5>
                         <div>{userInfo.email}</div>
                       </div>
                     </div>
-                    <div className="col-md-4 col-12 d-flex align-items-center mb-3">
+                    <div className="col-md-3 col-12 d-flex align-items-center mb-3">
                       <div>
                         <h5>Phone</h5>
                         <div>{userInfo.phoneNumber || `N/A`}</div>
@@ -139,21 +139,30 @@ const DashboardPage = (props) => {
               </div>
             </div>
           </div>
-        </div>
-      )}
 
-      {userStudents && userStudents.length > 0 ? (
-        <div className="table-wrapper">
-          <Table
-            columns={columns}
-            data={userStudents}
-            generateMessage={generateMessage}
-            afterSubmit={getUserStudents}
-            userId={props.userId}
-          />
+          {userStudents && userStudents.length > 0 ? (
+            <div className="table-wrapper">
+              <Table
+                columns={columns}
+                data={userStudents}
+                generateMessage={generateMessage}
+                afterSubmit={getUserStudents}
+                userId={props.userId}
+              />
+            </div>
+          ) : (
+            <div className="container-fluid mt-4">
+              <div className="row">
+                <div className="col centered-text">
+                  <h6>
+                    You Currently have no students. Click add students at the
+                    top to add students to your roster.
+                  </h6>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      ) : (
-        <p>You Currently have no students.</p>
       )}
     </div>
   );

@@ -13,8 +13,8 @@
 
 /* TABLE COMPONENT */
 .search-container {
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 5px;
 }
 
 .search-input {
@@ -52,5 +52,11 @@
 
 /* PDF VIEW */
 .pdf-viewer {
-  height: 100%;
+  height: calc(100% - .75rem);
+}
+
+@media (max-width: 992px) {
+  .pdf-viewer {
+    height: 700px;
+  }
 }
