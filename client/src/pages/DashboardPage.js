@@ -156,7 +156,7 @@ const DashboardPage = (props) => {
                 <div className="col centered-text">
                   <h6>
                     You Currently have no students. Click add students at the
-                    top to add students to your roster.
+                    top to add students to your roster. Their information will be used to generate invoices.
                   </h6>
                 </div>
               </div>

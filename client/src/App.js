@@ -5,7 +5,6 @@ import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import Navbar from "./components/Navbar";
 import deskBackground from "./images/deskBackground.jpg";
-import blueBackground from "./images/blueBackground.jpg";
 import InvoicePage from "./pages/InvoicePage";
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";

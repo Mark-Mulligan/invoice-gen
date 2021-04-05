@@ -3,7 +3,6 @@ import { Navbar, Nav } from "react-bootstrap";
 import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 
 const CustomNavbar = (props) => {
-
   return (
     <div>
       {props.history.location.pathname !== "/" && (
@@ -20,9 +19,11 @@ const CustomNavbar = (props) => {
               <IndexLinkContainer to="/createinvoice">
                 <Nav.Link active={false}>Create Invoice</Nav.Link>
               </IndexLinkContainer>
-              <Nav.Link active={false} onClick={props.showModal}>
-                Add Student
-              </Nav.Link>
+              {props.history.location.pathname === "/dashboard" && (
+                <Nav.Link active={false} onClick={props.showModal}>
+                  Add Student
+                </Nav.Link>
+              )}
             </Nav>
             <Nav>
               <button

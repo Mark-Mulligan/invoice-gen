@@ -33,7 +33,7 @@ const LoginPage = ({ onSignInClick, history }) => {
       <div className={`${classes.loginContainer} container-fluid`}>
         <h1 className={classes.loginTitle}>Lesson Invoice Generator</h1>
         <hr />
-        <p className={classes.paragraph}>Search for books through google books.  Save those you want for later.</p>
+        <p className={classes.paragraph}>Easily manage a roster of students and effortlessly create invoices in seconds.</p>
         <button
           onClick={() => onSignInClick(history)}
           className="btn btn-dark btn-block"
