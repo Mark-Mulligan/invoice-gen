@@ -8,6 +8,7 @@ exports.createStudent = async (req, res) => {
     parentEmail,
     parentPhone,
     school,
+    lessonCost
   } = req.body;
 
   const student = new Student({
@@ -17,6 +18,7 @@ exports.createStudent = async (req, res) => {
     parentEmail,
     parentPhone,
     school,
+    lessonCost
   });
 
   try {
@@ -58,6 +60,7 @@ exports.editStudent = async (req, res) => {
     parentEmail,
     parentPhone,
     school,
+    lessonCost
   } = req.body;
 
   try {
@@ -69,6 +72,7 @@ exports.editStudent = async (req, res) => {
         parentEmail,
         parentPhone,
         school,
+        lessonCost
       }
     );
 

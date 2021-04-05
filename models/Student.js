@@ -16,6 +16,7 @@ const StudentSchema = new mongoose.Schema({
   },
   parentPhone: String,
   school: String,
+  lessonCost: Number
 });
 
 const Student = mongoose.model("Student", StudentSchema);

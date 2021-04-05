@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { TextField } from "@material-ui/core";
+import { TextField, FormControl, InputLabel, OutlinedInput, InputAdornment } from "@material-ui/core";
 import axios from "axios";
 import Confirm from "../modals/Confirm";
 
@@ -19,6 +19,7 @@ const StudentModal = ({
   const [parentEmail, setParentEmail] = useState("");
   const [parentPhone, setParentPhone] = useState("");
   const [school, setSchool] = useState("");
+  const [lessonCost, setLessonCost] = useState(20);
 
   useEffect(() => {
     if (studentInfo) {
@@ -27,6 +28,7 @@ const StudentModal = ({
       setParentEmail(studentInfo?.parentEmail);
       setParentPhone(studentInfo?.parentPhone);
       setSchool(studentInfo?.school);
+      setLessonCost(studentInfo?.lessonCost);
     }
   }, [studentInfo]);
 
@@ -40,6 +42,7 @@ const StudentModal = ({
       parentEmail,
       parentPhone,
       school,
+      lessonCost
     };
 
     const editStudentInfo = {
@@ -49,6 +52,7 @@ const StudentModal = ({
       parentEmail,
       parentPhone,
       school,
+      lessonCost
     };
 
     if (addStudentModal) {
@@ -106,7 +110,7 @@ const StudentModal = ({
       .catch(function (error) {
         console.log(error);
       });
-  }
+  };
 
   return (
     <>
@@ -127,6 +131,7 @@ const StudentModal = ({
             <div className="mb-3">
               <TextField
                 required
+                size="small"
                 fullWidth
                 id="student-name-input"
                 label="Name"
@@ -139,6 +144,7 @@ const StudentModal = ({
             <div className="mb-3">
               <TextField
                 required
+                size="small"
                 fullWidth
                 id="parent-name-input"
                 label="Parent Name"
@@ -151,6 +157,7 @@ const StudentModal = ({
             <div className="mb-3">
               <TextField
                 required
+                size="small"
                 fullWidth
                 id="parent-email-input"
                 label="Parent Email"
@@ -162,6 +169,7 @@ const StudentModal = ({
             </div>
             <div className="mb-3">
               <TextField
+                size="small"
                 fullWidth
                 id="parente-phone-input"
                 label="Parent Phone"
@@ -173,6 +181,7 @@ const StudentModal = ({
             </div>
             <div className="mb-3">
               <TextField
+                size="small"
                 fullWidth
                 id="school-input"
                 label="School"
@@ -182,12 +191,32 @@ const StudentModal = ({
                 autoComplete="off"
               />
             </div>
+            <div className="">
+              <FormControl size="small" fullWidth variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-price">
+                  Lesson Cost
+                </InputLabel>
+                <OutlinedInput
+                  required
+                  type="number"
+                  id="outlined-adornment-price"
+                  value={lessonCost}
+                  onChange={(e) => setLessonCost(e.target.value)}
+                  startAdornment={
+                    <InputAdornment position="start">$</InputAdornment>
+                  }
+                  labelWidth={90}
+                />
+              </FormControl>
+            </div>
           </Modal.Body>
           <Modal.Footer className="justify-content-start">
             <Button variant="dark" type="submit">
               {submitButtonName}
             </Button>
-            {editStudentModal && <Confirm onConfirm={() => handleDeleteClick(studentInfo)} />}
+            {editStudentModal && (
+              <Confirm onConfirm={() => handleDeleteClick(studentInfo)} />
+            )}
             <Button variant="outline-dark" onClick={hideModal}>
               Cancel
             </Button>

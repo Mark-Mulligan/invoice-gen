@@ -26,6 +26,10 @@ const columns = [
     Header: "School",
     accessor: "school",
   },
+  {
+    Header: "Rate",
+    accessor: "lessonCost"
+  }
 ];
 
 const DashboardPage = (props) => {

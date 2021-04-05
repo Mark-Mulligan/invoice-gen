@@ -59,6 +59,10 @@ const InvoicePage = (props) => {
       });
   };
 
+  const setStudentLessonRates = (lessonRate) => {
+      setLessons(prevData => lessons.map(lesson => ({...lesson, cost: lessonRate})));
+  }
+
   const handleMultiSelect = (event) => {
     setMonths(event.target.value);
   };
@@ -101,6 +105,7 @@ const InvoicePage = (props) => {
     setParentName(selectedStudent?.parentName);
     setParentEmail(selectedStudent?.parentEmail);
     setParentPhone(selectedStudent?.parentPhone);
+    setStudentLessonRates(selectedStudent?.lessonCost);
   };
 
   useEffect(() => {
@@ -317,7 +322,6 @@ const InvoicePage = (props) => {
                 })}
                 <button type="submit" className="btn btn-dark btn-block">Update Pdf</button>
             </div>
-           
           </form>
         </div>
         <div className="col-lg-6 col-12">
