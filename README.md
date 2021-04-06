@@ -24,15 +24,15 @@ https://react-google-books-app-1.herokuapp.com/
 
 * On this page, the users profile information is displayed.  It is automatically populated from their google account but can be changed and saved for later.  Here the user can also view a table of all their students.  They can add, edit, or delete students from this table.  The table is sortable by each column and there is a global search function as well.   
 
-<img src="./readmeImages/dashboardPage.jpeg" alt="Search Bar" width="500px" height="250px">
+<img src="./readmeImages/dashboardPage.jpg" alt="Dashboard Page" width="500px" height="250px">
 
 * To add a student, click the add student button at the top of the screen, then fill out all the information on the form to add a student.
 
-<img src="./readmeImages/addStudent.jpg" alt="Search Bar" width="500px" height="250px">
+<img src="./readmeImages/addStudent.jpg" alt="Add Student Modal" width="500px" height="250px">
 
 * To edit a student, click on the row that contains the student you would like to edit in the table.  This will make a modal appear where you can update an information about the student you would like.  
 
-<img src="./readmeImages/editStudent.jpeg" alt="Search Bar" width="500px" height="250px">
+<img src="./readmeImages/editStudent.jpg" alt="Edit Student Modal" width="500px" height="250px">
 
 * To delete a student, click on the row that conatins the student you would like to delete.  On the modal that opens up, select the delete student option.  
 
@@ -40,7 +40,7 @@ https://react-google-books-app-1.herokuapp.com/
 
 * This page is used to generate invoices.  The form is automatically populated with your profile data.  Simply select the student would like to create the invoice for.  When this is done, the rest of the their data will be automatically populated in the form.  However, if you would like, you can change any information in the form you want.  When you are done filling out the form, click generate PDF.  This will show you a preview of your generated pdf.  Click download pdf on the top of the preview screen.  If you wish to make changes, simply change the information in the form and click update PDF.    
 
-<img src="./readmeImages/invoicePage.jpg" alt="Column Example" width="500px" height="250px">
+<img src="./readmeImages/invoicePage.jpg" alt="Invoice Page" width="500px" height="250px">
 
 ## Installation
 
