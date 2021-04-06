@@ -125,7 +125,7 @@ const StudentModal = ({
       >
         <form onSubmit={onFormSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title>Add Student</Modal.Title>
+            <Modal.Title>{editStudentModal && "Edit Student"}{addStudentModal && "Add Student"}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="mb-3">
