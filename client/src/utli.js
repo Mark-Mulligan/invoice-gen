@@ -9,3 +9,9 @@ export const formatMonthsArr = (arr) => {
     return '';
   }
 }
+
+export const formatPDFTitle = (studentName, months) => {
+  let formattedName = studentName.trim().split(' ').join('');
+  let formattedDates = months.join('_');
+  return `${formattedName}-${formattedDates}-invoice.pdf`;
+}

@@ -88,8 +88,8 @@ const MyDocument = (props) => {
               <Text style={styles.subTitle}>BILL TO</Text>
 
               <View style={styles.size14}>
-                <Text style={{ marginBottom: 2 }}>{props.data.parentName}</Text>
-                <Link style={styles.email} src={`mailto:${props.data.parentEmail}`}>{props.data.parentEmail}</Link>
+                <Text style={{ marginBottom: 2 }}>{props.data?.parentName}</Text>
+                <Link style={styles.email} src={`mailto:${props.data?.parentEmail}`}>{props.data?.parentEmail}</Link>
               </View>
             </View>
             <View style={styles.col}>
@@ -98,7 +98,7 @@ const MyDocument = (props) => {
               <View style={styles.size14}>
                 <Text style={{ marginBottom: 2 }}>
                   {props.data.studentName}'s{" "}
-                  {formatMonthsArr(props.data.months)}
+                  {formatMonthsArr(props.data?.months)}
                 </Text>
                 <Text>Private Lessons</Text>
               </View>
@@ -136,7 +136,7 @@ const MyDocument = (props) => {
         </View>
 
         <View style={styles.section}>
-          <Text>Thank You!!!</Text>
+          <Text>Thank You!</Text>
         </View>
       </Page>
     </Document>

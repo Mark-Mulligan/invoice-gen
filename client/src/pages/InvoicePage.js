@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PDFViewer } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import axios from "axios";
 import {
   FormControl,
@@ -13,9 +13,13 @@ import MyDocument from "../pdf/MyDocument";
 import DateInput from "../inputs/DataInput";
 import MultiSelect from "../inputs/MultiSelect";
 import "./InvoicePage.css";
+import { formatPDFTitle } from "../utli";
 
 const InvoicePage = (props) => {
   const [userStudents, setUserStudents] = useState("");
+
+  // Can not show pdf preview on mobile or small screens.
+  const [showPDFPreview, setShowPDFPreview] = useState(window.innerWidth > 500);
 
   const [student, setStudent] = useState("");
   const [yourName, setYourName] = useState("");
@@ -33,6 +37,15 @@ const InvoicePage = (props) => {
   const [total, setTotal] = useState(84);
 
   const [pdfData, setPdfData] = useState(null);
+
+  const checkScreenSize = () => {
+    setShowPDFPreview(window.innerWidth > 500);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  });
 
   const getUserStudents = () => {
     axios
@@ -60,8 +73,10 @@ const InvoicePage = (props) => {
   };
 
   const setStudentLessonRates = (lessonRate) => {
-      setLessons(prevData => lessons.map(lesson => ({...lesson, cost: lessonRate})));
-  }
+    setLessons((prevData) =>
+      lessons.map((lesson) => ({ ...lesson, cost: lessonRate }))
+    );
+  };
 
   const handleMultiSelect = (event) => {
     setMonths(event.target.value);
@@ -70,7 +85,10 @@ const InvoicePage = (props) => {
   const createLessonState = (numberOfLessons) => {
     const lessonState = [];
     for (let i = 0; i < numberOfLessons; i++) {
-      lessonState.push({ date: new Date().toLocaleDateString(), cost: userStudents[student]?.lessonCost || 21 });
+      lessonState.push({
+        date: new Date().toLocaleDateString(),
+        cost: userStudents[student]?.lessonCost || 21,
+      });
     }
     setLessons(lessonState);
   };
@@ -151,6 +169,13 @@ const InvoicePage = (props) => {
       parentEmail,
       months,
     });
+
+    window.setTimeout(function(){ 
+      if (!showPDFPreview) {
+        console.log('window scroll called');
+        window.scrollTo(0,document.body.scrollHeight);
+      }
+    }, 200);
   };
 
   return (
@@ -226,7 +251,7 @@ const InvoicePage = (props) => {
                 <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     fullWidth
-                    size="small" 
+                    size="small"
                     id="student-name-input"
                     label="Student Name"
                     variant="outlined"
@@ -237,7 +262,7 @@ const InvoicePage = (props) => {
                 <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     fullWidth
-                    size="small" 
+                    size="small"
                     id="parent-name-input"
                     label="Parent Name"
                     variant="outlined"
@@ -250,7 +275,7 @@ const InvoicePage = (props) => {
                 <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     fullWidth
-                    size="small" 
+                    size="small"
                     id="parent-email-input"
                     label="Parent Email"
                     variant="outlined"
@@ -261,7 +286,7 @@ const InvoicePage = (props) => {
                 <div className="col-sm-6 col-12 mb-3">
                   <TextField
                     fullWidth
-                    size="small" 
+                    size="small"
                     id="parent-phone-input"
                     label="Parent Phone"
                     variant="outlined"
@@ -272,7 +297,7 @@ const InvoicePage = (props) => {
               </div>
               <div className="row">
                 <div className="col-sm-6 col-12 mb-3">
-                  <MultiSelect 
+                  <MultiSelect
                     value={months}
                     handleMultiSelect={handleMultiSelect}
                   />
@@ -281,7 +306,7 @@ const InvoicePage = (props) => {
                   <TextField
                     required
                     fullWidth
-                    size="small" 
+                    size="small"
                     type="number"
                     id="lesson-number-input"
                     label="Number of Lessons"
@@ -320,16 +345,35 @@ const InvoicePage = (props) => {
                     </div>
                   );
                 })}
-                <button type="submit" className="mb-3 btn btn-dark btn-block">{pdfData ? 'Update PDF' : 'Generate PDF'}</button>
+              <div className="row">
+                <div className="col-sm-6 col-12">
+                  <button type="submit" className="mb-3 btn btn-dark btn-block">
+                    {pdfData ? "Update PDF" : "Generate PDF"}
+                  </button>
+                </div>
+                <div className="col-sm-6 col-12 mb-3">
+                  {pdfData !== null && (
+                    <PDFDownloadLink
+                      document={<MyDocument data={pdfData} />}
+                      fileName={formatPDFTitle(studentName, months)}
+                      className="btn btn-outline-dark btn-block"
+                    >
+                      {({ blob, url, loading, error }) =>
+                        loading ? "Loading document..." : "Click to download"
+                      }
+                    </PDFDownloadLink>
+                  )}
+                </div>
+              </div>
             </div>
           </form>
         </div>
         <div className="col-lg-6 col-12 pdf-column">
-        {pdfData !== null ? (
-          <PDFViewer className="container-fluid pdf-viewer p-0 mb-3">
-            <MyDocument data={pdfData} title="test" />
-          </PDFViewer>
-        ) : null}
+          {pdfData !== null && showPDFPreview ? (
+            <PDFViewer className="container-fluid pdf-viewer p-0 mb-3">
+              <MyDocument data={pdfData} title="test" />
+            </PDFViewer>
+          ) : null}
         </div>
       </div>
     </div>
@@ -337,3 +381,9 @@ const InvoicePage = (props) => {
 };
 
 export default InvoicePage;
+
+/* {pdfData !== null ? (
+            <PDFViewer className="container-fluid pdf-viewer p-0 mb-3">
+              <MyDocument data={pdfData} title="test" />
+            </PDFViewer>
+          ) : null} */
