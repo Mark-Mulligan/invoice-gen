@@ -20,7 +20,7 @@ function Confirm(props) {
       </Button>
         <Modal
           size="sm"
-          className="confirm-modal"
+          contentClassName="confirm-modal"
           centered
           show={show}
           onHide={handleClose}

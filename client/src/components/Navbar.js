@@ -27,14 +27,13 @@ const CustomNavbar = (props) => {
               )}
             </Nav>
             <Nav>
-              <Confirm 
+              <Confirm
                 onConfirm={() => props.onSignOutClick(props.history)}
                 buttonVariant="dark"
                 buttonText="Sign Out"
                 message="Sign Out?"
                 googleButton
               />
-              
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -44,3 +43,11 @@ const CustomNavbar = (props) => {
 };
 
 export default CustomNavbar;
+
+/* <Confirm 
+                onConfirm={() => props.onSignOutClick(props.history)}
+                buttonVariant="dark"
+                buttonText="Sign Out"
+                message="Sign Out?"
+                googleButton
+              /> */

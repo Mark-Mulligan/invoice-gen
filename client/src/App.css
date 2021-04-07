@@ -8,8 +8,8 @@
 
 /* Modals */
 .confirm-modal {
-  z-index: 3;
-}
+  z-index: 3 !important;
+} 
 
 /* TABLE COMPONENT */
 .search-container {
