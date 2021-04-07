@@ -141,7 +141,6 @@ const InvoicePage = (props) => {
 
   useEffect(() => {
     if (lessonNum && lessonNum > 0) {
-      console.log("this ran");
       createLessonState(lessonNum);
     }
   }, [lessonNum]);
@@ -172,7 +171,6 @@ const InvoicePage = (props) => {
 
     window.setTimeout(function(){ 
       if (!showPDFPreview) {
-        console.log('window scroll called');
         window.scrollTo(0,document.body.scrollHeight);
       }
     }, 200);
@@ -381,9 +379,3 @@ const InvoicePage = (props) => {
 };
 
 export default InvoicePage;
-
-/* {pdfData !== null ? (
-            <PDFViewer className="container-fluid pdf-viewer p-0 mb-3">
-              <MyDocument data={pdfData} title="test" />
-            </PDFViewer>
-          ) : null} */

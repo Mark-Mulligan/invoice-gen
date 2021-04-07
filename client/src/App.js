@@ -36,7 +36,7 @@ class App extends React.Component {
           scope: "email",
         })
         .then(() => {
-          console.log("loaded auth");
+          //console.log("loaded auth");
           this.auth = window.gapi.auth2.getAuthInstance();
           this.setState({
             isSignedIn: this.auth.isSignedIn.get(),
@@ -86,7 +86,6 @@ class App extends React.Component {
     axios
       .post("/api/user", userInfo)
       .then((data) => {
-        console.log(data);
         history.push("/dashboard");
       })
       .catch(function (error) {

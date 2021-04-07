@@ -215,7 +215,12 @@ const StudentModal = ({
               {submitButtonName}
             </Button>
             {editStudentModal && (
-              <Confirm onConfirm={() => handleDeleteClick(studentInfo)} />
+              <Confirm 
+                onConfirm={() => handleDeleteClick(studentInfo)} 
+                buttonVariant="dark"
+                buttonText="Delete Student"
+                message="Are you sure you want to delete this student?"
+                />
             )}
             <Button variant="outline-dark" onClick={hideModal}>
               Cancel

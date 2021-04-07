@@ -49,7 +49,6 @@ const DashboardPage = (props) => {
       .get(`/api/students?userid=${props.userId}`)
       .then((response) => {
         setUserStudents(response.data.data);
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -61,8 +60,6 @@ const DashboardPage = (props) => {
       .get(`/api/user?userid=${props.userId}`)
       .then((response) => {
         setUserInfo(response.data.data[0]);
-        console.log(props);
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);

@@ -1,6 +1,7 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
+import Confirm from "../modals/Confirm";
 
 const CustomNavbar = (props) => {
   return (
@@ -26,13 +27,14 @@ const CustomNavbar = (props) => {
               )}
             </Nav>
             <Nav>
-              <button
-                onClick={() => props.onSignOutClick(props.history)}
-                className="btn btn-dark"
-              >
-                <i className="fab fa-google mr-1"></i>
-                Sign Out
-              </button>
+              <Confirm 
+                onConfirm={() => props.onSignOutClick(props.history)}
+                buttonVariant="dark"
+                buttonText="Sign Out"
+                message="Sign Out?"
+                googleButton
+              />
+              
             </Nav>
           </Navbar.Collapse>
         </Navbar>

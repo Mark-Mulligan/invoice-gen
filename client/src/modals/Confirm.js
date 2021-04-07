@@ -14,8 +14,9 @@ function Confirm(props) {
 
   return (
     <>
-      <Button variant="dark" onClick={handleShow}>
-        Delete Student
+      <Button variant={props.buttonVariant} onClick={handleShow}>
+        {props.googleButton && <i className="fab fa-google mr-1"></i>}
+        {props.buttonText}
       </Button>
         <Modal
           size="sm"
@@ -30,7 +31,7 @@ function Confirm(props) {
         >
           <Modal.Header closeButton>
             <Modal.Title>
-              Are you sure you want to delete this student?
+              {props.message}
             </Modal.Title>
           </Modal.Header>
           <Modal.Footer className="justify-content-start">
