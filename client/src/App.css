@@ -51,6 +51,10 @@
 }
 
 /* PDF VIEW */
+.pdf-column {
+  padding-right: 45px !important;
+}
+
 .pdf-viewer {
   height: calc(100% - .75rem);
 }

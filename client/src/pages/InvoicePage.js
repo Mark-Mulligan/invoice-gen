@@ -368,7 +368,7 @@ const InvoicePage = (props) => {
         </div>
         <div className="col-lg-6 col-12 pdf-column">
           {pdfData !== null && showPDFPreview ? (
-            <PDFViewer className="container-fluid pdf-viewer p-0 mb-3">
+            <PDFViewer className="container-fluid p-0 pdf-viewer mb-3">
               <MyDocument data={pdfData} title="test" />
             </PDFViewer>
           ) : null}

@@ -9,7 +9,7 @@ I built this application for one of my friends who is a private music teacher.  
 I used google oauth to login in the users, mongoDB to store all the nessary data, and the react-pdf package to create and generate professional invoices that can be downloaded and used as needed.  
 
 ### View the Project Live <br>
-https://react-google-books-app-1.herokuapp.com/
+https://invoice-generator-1.herokuapp.com/
 
 #### Built With
 * React.js
