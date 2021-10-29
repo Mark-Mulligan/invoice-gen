@@ -69,17 +69,16 @@ const styles = StyleSheet.create({
 });
 
 // Create Document Component
-const MyDocument = (props) => {
-  return (
+const MyDocument = ({ data }) => (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
           <Text>Invoice</Text>
-          <Text style={styles.name}>{props.data.yourName}</Text>
-          <Link style={styles.email} src={`mailto:${props.data.yourEmail}`}>
-            {props.data.yourEmail}
+          <Text style={styles.name}>{data.yourName}</Text>
+          <Link style={styles.email} src={`mailto:${data.yourEmail}`}>
+            {data.yourEmail}
           </Link>
-          <Text style={styles.phone}>{props.data.yourNumber}</Text>
+          <Text style={styles.phone}>{data.yourNumber}</Text>
         </View>
 
         <View style={styles.section}>
@@ -88,8 +87,8 @@ const MyDocument = (props) => {
               <Text style={styles.subTitle}>BILL TO</Text>
 
               <View style={styles.size14}>
-                <Text style={{ marginBottom: 2 }}>{props.data?.parentName}</Text>
-                <Link style={styles.email} src={`mailto:${props.data?.parentEmail}`}>{props.data?.parentEmail}</Link>
+                <Text style={{ marginBottom: 2 }}>{data?.parentName}</Text>
+                <Link style={styles.email} src={`mailto:${data?.parentEmail}`}>{data?.parentEmail}</Link>
               </View>
             </View>
             <View style={styles.col}>
@@ -97,8 +96,8 @@ const MyDocument = (props) => {
 
               <View style={styles.size14}>
                 <Text style={{ marginBottom: 2 }}>
-                  {props.data.studentName}'s{" "}
-                  {formatMonthsArr(props.data?.months)}
+                  {data.studentName}'s{" "}
+                  {formatMonthsArr(data?.months)}
                 </Text>
                 <Text>Private Lessons</Text>
               </View>
@@ -111,7 +110,7 @@ const MyDocument = (props) => {
             <View style={styles.col}>
               <Text>Private Lessons (Dates)</Text>
 
-              {props.data.lessons.map((lesson, index) => {
+              {data.lessons.map((lesson, index) => {
                 return (
                   <Text style={styles.tableCell} key={`lesson-${index}`}>
                     {lesson.date}
@@ -123,14 +122,14 @@ const MyDocument = (props) => {
             <View style={styles.col}>
               <Text>Amount</Text>
 
-              {props.data.lessons.map((lesson, index) => {
+              {data.lessons.map((lesson, index) => {
                 return (
                   <Text style={styles.tableCell} key={`amount-${index}`}>
                     ${lesson.cost}
                   </Text>
                 );
               })}
-              <Text style={styles.tableCell}>${props.data.total}</Text>
+              <Text style={styles.tableCell}>${data.total}</Text>
             </View>
           </View>
         </View>
@@ -141,6 +140,5 @@ const MyDocument = (props) => {
       </Page>
     </Document>
   );
-};
 
 export default MyDocument;

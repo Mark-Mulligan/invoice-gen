@@ -1,14 +1,14 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import axios from "axios";
-import LoginPage from "./pages/LoginPage";
-import DashboardPage from "./pages/DashboardPage";
-import Navbar from "./components/Navbar";
-import deskBackground from "./images/deskBackground.jpg";
-import InvoicePage from "./pages/InvoicePage";
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
+import LoginPage from './pages/LoginPage';
+import DashboardPage from './pages/DashboardPage';
+import Navbar from './components/Navbar';
+import deskBackground from './images/deskBackground.jpg';
+import InvoicePage from './pages/InvoicePage';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import "./App.css";
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import './App.css';
 
 class App extends React.Component {
   state = {
@@ -29,11 +29,11 @@ class App extends React.Component {
   };
 
   setAuth = () => {
-    window.gapi.load("client:auth2", () => {
+    window.gapi.load('client:auth2', () => {
       window.gapi.client
         .init({
           clientId: process.env.REACT_APP_CLIENT_ID,
-          scope: "email",
+          scope: 'email',
         })
         .then(() => {
           //console.log("loaded auth");
@@ -84,9 +84,9 @@ class App extends React.Component {
     };
 
     axios
-      .post("/api/user", userInfo)
+      .post('/api/user', userInfo)
       .then((data) => {
-        history.push("/dashboard");
+        history.push('/dashboard');
       })
       .catch(function (error) {
         console.log(error);
@@ -103,12 +103,12 @@ class App extends React.Component {
     return (
       <div
         style={{
-          minHeight: "100vh",
+          height: '100vh',
           backgroundImage: `url(${deskBackground})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-          overflow: "scroll",
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed',
+          overflow: 'auto',
         }}
       >
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -131,11 +131,7 @@ class App extends React.Component {
                 exact
                 path="/"
                 render={(props) => (
-                  <LoginPage
-                    {...props}
-                    isSignedIn={this.state.isSignedIn}
-                    onSignInClick={this.onSignIn}
-                  />
+                  <LoginPage {...props} isSignedIn={this.state.isSignedIn} onSignInClick={this.onSignIn} />
                 )}
               />
               <Route

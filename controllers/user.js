@@ -1,17 +1,17 @@
-const User = require("../models/User");
+const User = require('../models/User');
 
 exports.loginUser = async (req, res) => {
   const { name, email, googleId } = req.body;
   const foundUser = await User.find({ googleId });
 
   if (foundUser.length > 0) {
-    res.status(200).json({ data: "user exsists, logging in" });
+    res.status(200).json({ data: 'user exsists, logging in' });
   } else {
     const user = new User({
       name,
       email,
       googleId,
-      phoneNumber: "",
+      phoneNumber: '',
     });
 
     try {
@@ -19,9 +19,7 @@ exports.loginUser = async (req, res) => {
       res.status(200).json({ success: true, data: savedUser });
     } catch (error) {
       console.log(error);
-      res
-        .status(500)
-        .json({ success: false, data: "There was an error logining you in" });
+      res.status(500).json({ success: false, data: 'There was an error logining you in' });
     }
   }
 };
@@ -35,7 +33,7 @@ exports.getUser = async (req, res) => {
   } else {
     res.json({
       success: false,
-      data: "There was an error retriving your data.",
+      data: 'There was an error retriving your data.',
     });
   }
 };
@@ -55,10 +53,10 @@ exports.updateUserInfo = async (req, res) => {
     res.status(200).json({
       success: true,
       data: user,
-      message: "Information successfully updated.",
+      message: 'Information successfully updated.',
     });
-  } catch(error) {
+  } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: "Unable to update user"});
+    res.status(500).json({ success: false, message: 'Unable to update user' });
   }
 };
